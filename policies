@@ -1,0 +1,81 @@
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:DescribeInstances"
+            ],
+            "Resource": [
+                "*"
+            ],
+            "Effect": "Allow",
+            "Condition": {}
+        },
+        {
+            "Action": [
+                "ec2:StartInstances",
+                "ec2:StopInstances"
+            ],
+            "Resource": [
+                "arn:aws:ec2:::instance/*"
+            ],
+            "Effect": "Allow",
+            "Condition": {
+                "StringEquals": {
+                    "ec2:ResourceTag/Owner": "${aws:username}"
+                }
+            }
+        }
+    ]
+}
+====================================================================================
+IAM-
+====================================================================================
+{
+      "Action": "ec2:*",
+      "Effect": "Allow",
+      "Resource": "*",
+      "Condition" : {
+                    "StringNotEquals" : {
+                        "ec2:ResourceTag/Name" : [
+                                        "UAT-Environment",
+                                        "INT-Environment"
+                                      ]
+                            }
+                    }
+    }
+===================================================================================
+Prevent Users from Deleting Amazon VPC Flow Logs
+===================================================================================
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:DeleteFlowLogs",
+                "logs:DeleteLogGroup",
+                "logs:DeleteLogStream"
+            ],
+            "Resource": "*",
+            "Effect": "Deny"
+        }
+    ]
+}
+====================================================================================
+====================================================================================
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "s3:DeleteBucket",
+                "s3:DeleteObject",
+                "s3:DeleteObjectVersion"
+            ],
+            "Resource": "*",
+            "Effect": "Deny"
+        }
+    ]
+}
+======================================================================================
+======================================================================================
