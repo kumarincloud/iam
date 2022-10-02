@@ -143,5 +143,26 @@ Require MFA to Stop an Amazon EC2 Instance
     ]
 }
 ==============================================================================
+Protect VPC Internet and NAT Gateway Settings from any Modifications
 ==============================================================================
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:CreateNatGateway",
+                "ec2:CreateInternetGateway",
+                "ec2:DeleteNatGateway",
+                "ec2:AttachInternetGateway",
+                "ec2:DeleteInternetGateway",
+                "ec2:DetachInternetGateway"
+            ],
+            "Resource": "*",
+            "Effect": "Deny"
+        }
+    ]
+}
+=================================================================================
+=================================================================================
+
 
