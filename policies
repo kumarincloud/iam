@@ -1,3 +1,6 @@
+=====================================================================
+IAM-Starting or Stopping EC2 Instances Based on a User Username
+=====================================================================
 {
     "Version": "2012-10-17",
     "Statement": [
@@ -78,4 +81,67 @@ Prevent Users from Deleting Amazon VPC Flow Logs
     ]
 }
 ======================================================================================
+Restrict the Use of the Root User in an AWS Account
 ======================================================================================
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": "*",
+            "Resource": "*",
+            "Effect": "Deny",
+            "Condition": {
+                "StringLike": {
+                    "aws:PrincipalArn": [
+                        "arn:aws:iam::*:root"
+                    ]
+                }
+            }
+        }
+    ]
+}
+============================================================================
+Amazon EC2 Instances to Use a Specific Type - 
+============================================================================
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:RunInstances"
+            ],
+            "Resource": "*",
+            "Effect": "Deny",
+            "Condition": {
+                "StringNotEquals": {
+                    "ec2:InstanceType": "t3.micro"
+                }
+            }
+        }
+    ]
+}
+===============================================================================
+Require MFA to Stop an Amazon EC2 Instance
+===============================================================================
+
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Action": [
+                "ec2:StopInstances",
+                "ec2:TerminateInstances"
+            ],
+            "Resource": "*",
+            "Effect": "Deny",
+            "Condition": {
+                "BoolIfExists": {
+                    "aws:MultiFactorAuthPresent": false
+                }
+            }
+        }
+    ]
+}
+==============================================================================
+==============================================================================
+
